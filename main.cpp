@@ -144,6 +144,38 @@ Node* parse(string code) {
 
 // Main
 
+string get_log(Node* node, int level = 0) {
+    Number* number = dynamic_cast<Number*>(node);
+    if (number) {
+        return "{ type: number, value: " + number->value + " }";
+    }
+    Name* name = dynamic_cast<Name*>(node);
+    if (name) {
+        return "{ type: name, value: " + name->id + " }";
+    }
+    BinaryExpression* binary_expression = dynamic_cast<BinaryExpression*>(node);
+    if (binary_expression) {
+        string log = "";
+        level++;
+        string left_log = get_log(binary_expression->left, level);
+        string right_log = get_log(binary_expression->right, level);
+        string indent  = "";
+        for(int i = 0; i < level; ++i) {
+            indent += "  ";
+        }
+        log += "type: " + binary_expression->type;
+        log += "\n" + indent + "left: " + left_log;
+        log += "\n" + indent + "right: " + right_log;
+        return log;
+    }
+    return "";
+}
+
+void display(Node* ast) {
+    string log_text = get_log(ast);
+    cout << log_text << endl;
+}
+
 int main(int argc, char *argv[]) {
     if (argc < 2) {
         cerr << "expected some expr" << endl;
@@ -151,5 +183,6 @@ int main(int argc, char *argv[]) {
     }
     string code = argv[1];
     Node* ast = parse(code);
+    display(ast);
     delete ast;
 }

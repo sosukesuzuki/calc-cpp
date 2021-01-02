@@ -6,6 +6,6 @@ An implementation of http://jorendorff.github.io/calc/docs/calculator-parser.htm
 
 ## Todo
 
-- [ ] Implement `display` function.
+- [x] Implement `display` function.
 - [ ] Add tests.
 - [ ] Use a build tool.

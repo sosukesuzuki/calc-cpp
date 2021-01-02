@@ -63,6 +63,7 @@ struct Name : Node {
 struct State {
     int position;
     vector<string> tokens;
+    State(vector<string> newTokens): tokens(newTokens), position(0) {}
 };
 
 string peek(State* state) {
@@ -132,13 +133,12 @@ Node* parse_expr(State* state) {
 }
 
 Node* parse(string code) {
-    State state;
-    state.position = 0;
-    state.tokens = tokenize(code);
-    Node* result = parse_expr(&state);
-    if (state.position != state.tokens.size()) {
-        throw runtime_error("unexpected" + peek(&state) + "'");
+    State* state = new State(tokenize(code));
+    Node* result = parse_expr(state);
+    if (state->position != state->tokens.size()) {
+        throw runtime_error("unexpected" + peek(state) + "'");
     }
+    delete state;
     return result;
 }
 

@@ -2,3 +2,4 @@ a.out
 /.vscode
 /calc-cpp
 /*.o
+/build

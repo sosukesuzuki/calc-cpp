@@ -6,7 +6,10 @@ An implementation of http://jorendorff.github.io/calc/docs/calculator-parser.htm
 
 ## Usage
 
-```
+``` sh
+$ mkdir build
+$ cd build
+$ cmake ..
 $ make
 $ ./calc-cpp "1 + 1"
 type: +
